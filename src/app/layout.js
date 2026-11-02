@@ -10,6 +10,7 @@ import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import SeoData from "@/models/seo.json";
 import { SITE_URL } from "@/helpers/site";
+import { AuthProvider } from "@/context/AuthContext";
 
 /** Styles */
 import "./globals.css";
@@ -76,9 +77,11 @@ const RootLayout = ({ children }) => {
                         },
                     }}
                 />
-                <Header />
-                <main>{children}</main>
-                <Footer />
+                <AuthProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                </AuthProvider>
             </body>
         </html>
     );

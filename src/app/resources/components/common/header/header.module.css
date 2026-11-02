@@ -88,6 +88,42 @@
                 color: var(--color-text-main);
             }
         }
+
+        .user_profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            .user_avatar {
+                width: 2.25rem;
+                height: 2.25rem;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid var(--color-primary, #6366f1);
+            }
+
+            .user_greeting {
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: var(--color-text-main);
+            }
+
+            .logout_button {
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: #ef4444;
+                background: transparent;
+                border: 1px solid #fca5a5;
+                padding: 0.35rem 0.75rem;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all var(--transition-fast);
+
+                &:hover {
+                    background: #fef2f2;
+                }
+            }
+        }
     }
 
     .mobile_toggle {

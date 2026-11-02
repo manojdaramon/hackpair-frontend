@@ -41,8 +41,6 @@ const HeroSection = () => {
                             How It Works
                         </Button>
                     </div>
-
-
                 </div>
 
                 <div className={styles.visual_col}>
