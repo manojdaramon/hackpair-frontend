@@ -1,0 +1,159 @@
+@import "./styles/reset.css";
+@import "./styles/variables.css";
+
+:root {
+    --background: var(--color-bg-main);
+    --foreground: var(--color-text-main);
+
+    font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+    :root {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        font-size: 15.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 350px) {
+    :root {
+        font-size: 14px;
+    }
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    min-height: 100%;
+    width: 100%;
+    /* clip (not hidden) keeps body from becoming a second scroll container */
+    overflow-x: clip;
+    font-family: var(--font-primary), sans-serif;
+    color: var(--color-text-main);
+    background-color: var(--color-bg-main);
+}
+
+* {
+    box-sizing: border-box;
+    letter-spacing: 0.15px;
+    font-family: var(--font-primary), sans-serif;
+}
+
+code,
+kbd,
+samp,
+pre {
+    font-family: var(--font-mono), monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul li,
+label {
+    margin-bottom: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+button,
+button:active,
+button:focus,
+input,
+input:active,
+input:focus,
+textarea,
+textarea:active,
+textarea:focus,
+input[type="submit"]:active,
+input[type="submit"]:focus {
+    box-shadow: none;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    background-color: transparent;
+    resize: vertical;
+    font-family: var(--font-primary), sans-serif;
+}
+
+/* Enforce accessible minimum font size on mobile form controls to prevent iOS Safari viewport auto-zoom */
+@media (max-width: 768px) {
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition:
+        color 9999s ease-out,
+        background-color 9999s ease-out;
+    transition-delay: 9999s;
+}
+
+input[type="password"] {
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+        Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    font-family: var(--font-primary), sans-serif;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
+}
+
+.contain {
+    width: 100%;
+    max-width: 1320px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+}
+
