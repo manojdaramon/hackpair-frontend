@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
             toast.success(
                 welcomeMessage || `Welcome back, ${userData?.firstName || "Developer"}!`
             );
-            router.push("/");
+            router.push("/dashboard");
             return { success: true, data: userData };
         } catch (err) {
             const errorMsg =

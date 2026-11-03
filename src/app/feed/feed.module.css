@@ -1,0 +1,5 @@
+.feed_page {
+    min-height: calc(100vh - 65px);
+    background-color: #f8fafc;
+}
+

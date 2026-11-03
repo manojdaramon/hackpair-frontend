@@ -1,0 +1,62 @@
+.profile_container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .profile_header {
+        .page_title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--color-text-main, #0f172a);
+            letter-spacing: -0.02em;
+        }
+
+        .page_subtitle {
+            font-size: 0.95rem;
+            color: var(--color-text-muted, #64748b);
+            margin-top: 0.25rem;
+        }
+    }
+
+    .profile_grid {
+        display: grid;
+        grid-template-columns: 1.25fr 0.95fr;
+        gap: 2rem;
+        align-items: start;
+
+        @media (--laptop) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .loading_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1rem;
+        gap: 1rem;
+        color: var(--color-text-muted, #64748b);
+        font-weight: 500;
+
+        .spinner {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid #e2e8f0;
+            border-top-color: var(--color-primary, #2563eb);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+

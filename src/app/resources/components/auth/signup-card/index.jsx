@@ -55,11 +55,11 @@ const SignupCard = () => {
     const router = useRouter();
 
     /**
-     * If user is already authenticated, redirect to the home page.
+     * If user is already authenticated, redirect to the feed.
      */
     useEffect(() => {
         if (user) {
-            router.push("/");
+            router.push("/feed");
         }
     }, [user, router]);
 

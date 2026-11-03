@@ -1,8 +1,11 @@
+"use client";
+
 /** React imports */
 import React from "react";
 
 /** Libraries */
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 /** Local imports */
 import LogoIcon from "@/icons/common/logo.svg";
@@ -11,12 +14,21 @@ import GithubIcon from "@/icons/common/github.svg";
 /** Styles */
 import styles from "./footer.module.css";
 
+const WORKSPACE_ROUTES = ["/dashboard", "/feed", "/requests", "/connections"];
+
 /**
  * Site footer displaying branding, directory links, network status, and copyright.
+ * Automatically omitted on authenticated workspace routes (feed, requests, connections, dashboard).
  *
- * @returns {React.ReactElement} The rendered Footer component.
+ * @returns {React.ReactElement|null} The rendered Footer component, or null on workspace routes.
  */
 const Footer = () => {
+    const pathname = usePathname();
+
+    if (WORKSPACE_ROUTES.some((route) => pathname?.startsWith(route))) {
+        return null;
+    }
+
     return (
         <footer className={styles.footer}>
             <div className={styles.footer_inner}>

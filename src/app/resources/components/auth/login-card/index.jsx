@@ -30,11 +30,11 @@ const LoginCard = () => {
     const router = useRouter();
 
     /**
-     * If user is already authenticated, redirect to the home feed.
+     * If user is already authenticated, redirect to the feed.
      */
     useEffect(() => {
         if (user) {
-            router.push("/");
+            router.push("/feed");
         }
     }, [user, router]);
 
