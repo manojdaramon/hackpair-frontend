@@ -1,0 +1,232 @@
+.signup_card {
+    width: 100%;
+    max-width: 520px;
+    background-color: var(--color-white, #ffffff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+
+    .card_header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        .card_title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-text-main, #0f172a);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .card_subtitle {
+            font-size: 0.925rem;
+            color: var(--color-text-muted, #64748b);
+            line-height: 1.5;
+        }
+    }
+
+    .alert_box {
+        padding: 0.75rem 1rem;
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 0.5rem;
+        color: #dc2626;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .signup_form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
+        .form_row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+
+            @media (--mobile) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form_group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+
+            .form_label {
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: var(--color-text-main, #1e293b);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .label_optional {
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    color: var(--color-text-muted, #94a3b8);
+                }
+            }
+
+            .input_field,
+            .select_field {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+                font-family: var(--font-primary), sans-serif;
+                border-radius: 0.5rem;
+                border: 1.5px solid var(--color-border, #cbd5e1);
+                background-color: var(--color-white, #ffffff);
+                color: var(--color-text-main, #0f172a);
+                transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+                outline: none;
+
+                &:focus {
+                    border-color: var(--color-primary, #2563eb);
+                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+                }
+
+                &:disabled {
+                    background-color: #f8fafc;
+                    cursor: not-allowed;
+                    opacity: 0.7;
+                }
+            }
+
+            .select_field {
+                cursor: pointer;
+            }
+
+            .input_error {
+                border-color: #ef4444;
+
+                &:focus {
+                    border-color: #ef4444;
+                    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+                }
+            }
+
+            .error_message {
+                font-size: 0.8rem;
+                color: #ef4444;
+                font-weight: 500;
+            }
+
+            .field_hint {
+                font-size: 0.775rem;
+                color: var(--color-text-muted, #64748b);
+            }
+        }
+
+        .password_checklist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.5rem;
+            margin-top: 0.25rem;
+            padding: 0.65rem 0.75rem;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            border: 1px solid var(--color-border, #e2e8f0);
+
+            .checklist_item {
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: var(--color-text-muted, #94a3b8);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                transition: color var(--transition-fast);
+
+                .check_icon {
+                    font-size: 0.7rem;
+                }
+            }
+
+            .checklist_valid {
+                color: #16a34a;
+                font-weight: 600;
+            }
+        }
+
+        .details_toggle_btn {
+            background: none;
+            border: none;
+            color: var(--color-primary, #2563eb);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            outline: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .details_section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border: 1px dashed var(--color-border, #cbd5e1);
+            border-radius: 0.5rem;
+        }
+
+        .submit_btn {
+            width: 100%;
+            padding: 0.85rem;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-primary), sans-serif;
+            border-radius: 0.5rem;
+            background-color: var(--color-primary, #2563eb);
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color var(--transition-fast), opacity var(--transition-fast);
+
+            &:hover:not(:disabled) {
+                background-color: var(--color-primary-hover, #1d4ed8);
+            }
+
+            &:disabled {
+                opacity: 0.65;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .card_footer {
+        text-align: center;
+        margin-top: 1.75rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--color-border, #f1f5f9);
+        font-size: 0.875rem;
+        color: var(--color-text-muted, #64748b);
+
+        .footer_link {
+            color: var(--color-primary, #2563eb);
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 0.35rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+

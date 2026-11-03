@@ -2,6 +2,8 @@
 
 /** React imports */
 import React, { createContext, useContext, useState, useEffect } from "react";
+
+/** Libraries */
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -12,13 +14,18 @@ const AuthContext = createContext({
     user: null,
     loading: true,
     login: async () => {},
+    signup: async () => {},
     logout: async () => {},
     setUser: () => {},
 });
 
 /**
  * Global Authentication Provider (Context API replacing Redux Toolkit).
- * Handles user session persistence, login, logout, and navbar updates across components.
+ * Handles user session persistence, login, signup, logout, and navbar updates across components.
+ *
+ * @param {Object} props Component properties.
+ * @param {React.ReactNode} props.children Child elements.
+ * @returns {React.ReactElement} AuthContext Provider tree.
  */
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -51,19 +58,23 @@ export const AuthProvider = ({ children }) => {
      *
      * @param {string} email User email.
      * @param {string} password User password.
+     * @param {string|null} [welcomeMessage=null] Optional custom toast message.
+     * @returns {Promise<{success: boolean, error?: string, data?: Object}>} Login operation result.
      */
-    const login = async (email, password) => {
+    const login = async (email, password, welcomeMessage = null) => {
         try {
             const response = await api.post("/login", { email, password });
             const userData = response.data;
             setUser(userData);
-            toast.success(`Welcome back, ${userData?.firstName || "Developer"}!`);
+            toast.success(
+                welcomeMessage || `Welcome back, ${userData?.firstName || "Developer"}!`
+            );
             router.push("/");
             return { success: true, data: userData };
         } catch (err) {
             const errorMsg =
                 err.response?.data?.message ||
-                err.response?.data ||
+                (typeof err.response?.data === "string" ? err.response.data : null) ||
                 err.message ||
                 "Failed to login. Please check your credentials.";
             toast.error(errorMsg);
@@ -72,7 +83,48 @@ export const AuthProvider = ({ children }) => {
     };
 
     /**
+     * Registers a new user account with HackPair and automatically signs them in.
+     *
+     * @param {Object} signupData User registration details.
+     * @returns {Promise<{success: boolean, error?: string, data?: Object}>} Registration result.
+     */
+    const signup = async (signupData) => {
+        try {
+            await api.post("/signup", signupData);
+
+            const greeting = signupData.firstName
+                ? `Welcome to HackPair, ${signupData.firstName}!`
+                : "Welcome to HackPair!";
+
+            // Automatically establish cookie session upon registration
+            const loginResult = await login(
+                signupData.email,
+                signupData.password,
+                greeting
+            );
+
+            if (loginResult.success) {
+                return { success: true, data: loginResult.data };
+            }
+
+            toast.success("Account created successfully! Please sign in.");
+            router.push("/login");
+            return { success: true };
+        } catch (err) {
+            const errorMsg =
+                err.response?.data?.message ||
+                (typeof err.response?.data === "string" ? err.response.data : null) ||
+                err.message ||
+                "Failed to sign up. Please try again.";
+            toast.error(errorMsg);
+            return { success: false, error: errorMsg };
+        }
+    };
+
+    /**
      * Logs out the user, clears JWT cookie on server, and resets user state.
+     *
+     * @returns {Promise<void>}
      */
     const logout = async () => {
         try {
@@ -88,7 +140,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, setUser }}>
+        <AuthContext.Provider value={{ user, loading, login, signup, logout, setUser }}>
             {children}
         </AuthContext.Provider>
     );
@@ -96,6 +148,8 @@ export const AuthProvider = ({ children }) => {
 
 /**
  * Custom hook to consume the AuthContext.
+ *
+ * @returns {Object} Auth context value.
  */
 export const useAuth = () => {
     const context = useContext(AuthContext);
@@ -104,4 +158,3 @@ export const useAuth = () => {
     }
     return context;
 };
-
