@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 
 /** Local imports */
 import api from "@/helpers/axios";
+import { getSocket } from "@/helpers/socket";
 
 /** Styles */
 import styles from "./dashboard-sidebar.module.css";
@@ -38,6 +39,7 @@ const DashboardSidebar = ({
     const pathname = usePathname();
     const [imageError, setImageError] = useState(false);
     const [internalRequestsCount, setInternalRequestsCount] = useState(0);
+    const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
     const displayName = `${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Developer";
     const initials = (user?.firstName?.charAt(0) || "D").toUpperCase();
@@ -45,7 +47,9 @@ const DashboardSidebar = ({
     // Determine current active navigation section based on pathname or activeTab prop
     const activeNav =
         activeTab ||
-        (pathname?.startsWith("/requests")
+        (pathname?.startsWith("/chat")
+            ? "chat"
+            : pathname?.startsWith("/requests")
             ? "requests"
             : pathname?.startsWith("/connections")
             ? "connections"
@@ -55,12 +59,7 @@ const DashboardSidebar = ({
      * Polls incoming request count if not explicitly supplied by parent view.
      */
     useEffect(() => {
-        if (requestsCount !== undefined) {
-            setInternalRequestsCount(requestsCount);
-            return;
-        }
-
-        if (!user) {
+        if (requestsCount !== undefined || !user) {
             return;
         }
 
@@ -83,6 +82,46 @@ const DashboardSidebar = ({
             isMounted = false;
         };
     }, [requestsCount, user]);
+
+    /**
+     * Fetches unread chat messages count and syncs live with Socket.IO
+     */
+    useEffect(() => {
+        if (!user) return;
+
+        let isMounted = true;
+        const fetchUnreadCount = async () => {
+            try {
+                const response = await api.get("/chat/unread-count");
+                if (isMounted) {
+                    setUnreadMessagesCount(response.data?.unreadCount || 0);
+                }
+            } catch {
+                // Silently swallow chat badge errors
+            }
+        };
+
+        fetchUnreadCount();
+
+        const socket = getSocket();
+
+        const handleNewUnread = () => {
+            setUnreadMessagesCount((prev) => prev + 1);
+        };
+
+        const handleUnreadUpdated = () => {
+            fetchUnreadCount();
+        };
+
+        socket.on("newUnreadMessage", handleNewUnread);
+        socket.on("unreadCountUpdated", handleUnreadUpdated);
+
+        return () => {
+            isMounted = false;
+            socket.off("newUnreadMessage", handleNewUnread);
+            socket.off("unreadCountUpdated", handleUnreadUpdated);
+        };
+    }, [user, pathname]);
 
     const displayRequestsCount =
         requestsCount !== undefined ? requestsCount : internalRequestsCount;
@@ -153,6 +192,22 @@ const DashboardSidebar = ({
                     </span>
                     {connectionsCount > 0 && (
                         <span className={styles.badge}>{connectionsCount}</span>
+                    )}
+                </Link>
+
+                <Link
+                    href="/chat"
+                    onClick={() => onSelectTab && onSelectTab("chat")}
+                    className={`${styles.nav_item} ${activeNav === "chat" ? styles.nav_item_active : ""}`}
+                >
+                    <span className={styles.item_label}>
+                        <span className={styles.item_icon}>💬</span>
+                        <span>Messages</span>
+                    </span>
+                    {unreadMessagesCount > 0 && (
+                        <span className={`${styles.badge} ${styles.badge_highlight}`}>
+                            {unreadMessagesCount}
+                        </span>
                     )}
                 </Link>
             </nav>

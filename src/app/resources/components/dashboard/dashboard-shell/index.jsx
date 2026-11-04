@@ -41,7 +41,9 @@ const DashboardShell = ({
     const router = useRouter();
     const pathname = usePathname();
 
-    const activeTab = pathname?.startsWith("/requests")
+    const activeTab = pathname?.startsWith("/chat")
+        ? "chat"
+        : pathname?.startsWith("/requests")
         ? "requests"
         : pathname?.startsWith("/connections")
         ? "connections"
@@ -118,6 +120,15 @@ const DashboardShell = ({
                         {connectionsCount > 0 && (
                             <span className={styles.pill_badge}>{connectionsCount}</span>
                         )}
+                    </Link>
+
+                    <Link
+                        href="/chat"
+                        className={`${styles.tab_pill} ${activeTab === "chat" ? styles.tab_pill_active : ""}`}
+                        role="tab"
+                        aria-selected={activeTab === "chat"}
+                    >
+                        <span className={styles.pill_label}>💬 Messages</span>
                     </Link>
                 </div>
 

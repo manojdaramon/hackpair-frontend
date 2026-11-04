@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 /** Libraries */
 import Image from "next/image";
+import Link from "next/link";
 
 /** Styles */
 import styles from "./connections-view.module.css";
@@ -96,10 +97,20 @@ const ConnectionsView = ({ connections = [] }) => {
                                 </div>
                             )}
 
-                            <span className={styles.status_badge}>
-                                <span className={styles.badge_dot} />
-                                Connected
-                            </span>
+                            <div className={styles.card_footer}>
+                                <span className={styles.status_badge}>
+                                    <span className={styles.badge_dot} />
+                                    Connected
+                                </span>
+                                <Link
+                                    href={`/chat?userId=${partner._id}`}
+                                    className={styles.chat_btn}
+                                    title={`Chat with ${partner.firstName || "partner"}`}
+                                >
+                                    <span>💬</span>
+                                    <span>Chat</span>
+                                </Link>
+                            </div>
                         </div>
                     );
                 })}

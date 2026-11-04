@@ -20,6 +20,7 @@
     "react-hook-form": "^7.91.0",
     "react-hot-toast": "^2.6.1",
     "sass": "^1.107.1",
+    "socket.io-client": "^4.8.4",
     "yup": "^1.7.1"
   },
   "devDependencies": {
