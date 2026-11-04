@@ -89,6 +89,40 @@
                 }
             }
 
+            .password_wrapper {
+                position: relative;
+                width: 100%;
+                display: flex;
+                align-items: center;
+
+                .input_field {
+                    padding-right: 2.75rem;
+                }
+
+                .password_toggle_btn {
+                    position: absolute;
+                    right: 0.75rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: transparent;
+                    border: none;
+                    padding: 0.25rem;
+                    cursor: pointer;
+                    color: var(--color-text-muted, #64748b);
+                    transition: color var(--transition-fast, 0.2s ease);
+
+                    &:hover {
+                        color: var(--color-text-main, #0f172a);
+                    }
+
+                    svg {
+                        width: 1.15rem;
+                        height: 1.15rem;
+                    }
+                }
+            }
+
             .error_message {
                 font-size: 0.8rem;
                 color: #ef4444;

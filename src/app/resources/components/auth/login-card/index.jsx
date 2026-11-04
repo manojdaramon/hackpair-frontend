@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 
 /** Local imports */
 import { useAuth } from "@/context/AuthContext";
+import EyeIcon from "@/icons/common/eye.svg";
+import EyeOffIcon from "@/icons/common/eye-off.svg";
 
 /** Styles */
 import styles from "./login-card.module.css";
@@ -22,6 +24,7 @@ import styles from "./login-card.module.css";
 const LoginCard = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,22 +132,33 @@ const LoginCard = () => {
                     <label htmlFor="password" className={styles.form_label}>
                         Password
                     </label>
-                    <input
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                            if (errors.password) {
-                                setErrors((prev) => ({ ...prev, password: "" }));
-                            }
-                        }}
-                        placeholder="••••••••"
-                        className={`${styles.input_field} ${errors.password ? styles.input_error : ""}`}
-                        autoComplete="current-password"
-                        disabled={isSubmitting}
-                    />
+                    <div className={styles.password_wrapper}>
+                        <input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                if (errors.password) {
+                                    setErrors((prev) => ({ ...prev, password: "" }));
+                                }
+                            }}
+                            placeholder="••••••••"
+                            className={`${styles.input_field} ${errors.password ? styles.input_error : ""}`}
+                            autoComplete="current-password"
+                            disabled={isSubmitting}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className={styles.password_toggle_btn}
+                            aria-label={showPassword ? "Hide password" : "Show password"}
+                            tabIndex={-1}
+                        >
+                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                        </button>
+                    </div>
                     {errors.password && (
                         <span className={styles.error_message}>{errors.password}</span>
                     )}

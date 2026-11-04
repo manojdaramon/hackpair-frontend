@@ -2,7 +2,9 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "export",
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: "https",
@@ -31,27 +33,6 @@ const nextConfig = {
             use: ["@svgr/webpack"],
         });
         return config;
-    },
-    headers: async () => {
-        return [
-            {
-                source: "/(.*)",
-                headers: [
-                    {
-                        key: "X-Frame-Options",
-                        value: "SAMEORIGIN",
-                    },
-                    {
-                        key: "X-Content-Type-Options",
-                        value: "nosniff",
-                    },
-                    {
-                        key: "Referrer-Policy",
-                        value: "strict-origin-when-cross-origin",
-                    },
-                ],
-            },
-        ];
     },
 };
 

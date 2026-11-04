@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 
 /** Local imports */
 import api from "@/helpers/axios";
+import EyeIcon from "@/icons/common/eye.svg";
+import EyeOffIcon from "@/icons/common/eye-off.svg";
 
 /** Styles */
 import styles from "./change-password-card.module.css";
@@ -40,6 +42,9 @@ const ChangePasswordCard = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const criteria = evaluatePassword(newPassword);
 
@@ -126,21 +131,32 @@ const ChangePasswordCard = () => {
                     <label htmlFor="currentPassword" className={styles.form_label}>
                         Current Password
                     </label>
-                    <input
-                        id="currentPassword"
-                        type="password"
-                        value={currentPassword}
-                        onChange={(e) => {
-                            setCurrentPassword(e.target.value);
-                            if (errors.currentPassword) {
-                                setErrors((prev) => ({ ...prev, currentPassword: "" }));
-                            }
-                        }}
-                        placeholder="••••••••"
-                        className={`${styles.input_field} ${errors.currentPassword ? styles.input_error : ""}`}
-                        disabled={isSubmitting}
-                        autoComplete="current-password"
-                    />
+                    <div className={styles.password_wrapper}>
+                        <input
+                            id="currentPassword"
+                            type={showCurrentPassword ? "text" : "password"}
+                            value={currentPassword}
+                            onChange={(e) => {
+                                setCurrentPassword(e.target.value);
+                                if (errors.currentPassword) {
+                                    setErrors((prev) => ({ ...prev, currentPassword: "" }));
+                                }
+                            }}
+                            placeholder="••••••••"
+                            className={`${styles.input_field} ${errors.currentPassword ? styles.input_error : ""}`}
+                            disabled={isSubmitting}
+                            autoComplete="current-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowCurrentPassword((prev) => !prev)}
+                            className={styles.password_toggle_btn}
+                            aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+                            tabIndex={-1}
+                        >
+                            {showCurrentPassword ? <EyeOffIcon /> : <EyeIcon />}
+                        </button>
+                    </div>
                     {errors.currentPassword && (
                         <span className={styles.error_message}>{errors.currentPassword}</span>
                     )}
@@ -150,21 +166,32 @@ const ChangePasswordCard = () => {
                     <label htmlFor="newPassword" className={styles.form_label}>
                         New Password
                     </label>
-                    <input
-                        id="newPassword"
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => {
-                            setNewPassword(e.target.value);
-                            if (errors.newPassword) {
-                                setErrors((prev) => ({ ...prev, newPassword: "" }));
-                            }
-                        }}
-                        placeholder="••••••••"
-                        className={`${styles.input_field} ${errors.newPassword ? styles.input_error : ""}`}
-                        disabled={isSubmitting}
-                        autoComplete="new-password"
-                    />
+                    <div className={styles.password_wrapper}>
+                        <input
+                            id="newPassword"
+                            type={showNewPassword ? "text" : "password"}
+                            value={newPassword}
+                            onChange={(e) => {
+                                setNewPassword(e.target.value);
+                                if (errors.newPassword) {
+                                    setErrors((prev) => ({ ...prev, newPassword: "" }));
+                                }
+                            }}
+                            placeholder="••••••••"
+                            className={`${styles.input_field} ${errors.newPassword ? styles.input_error : ""}`}
+                            disabled={isSubmitting}
+                            autoComplete="new-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowNewPassword((prev) => !prev)}
+                            className={styles.password_toggle_btn}
+                            aria-label={showNewPassword ? "Hide password" : "Show password"}
+                            tabIndex={-1}
+                        >
+                            {showNewPassword ? <EyeOffIcon /> : <EyeIcon />}
+                        </button>
+                    </div>
                     {errors.newPassword && (
                         <span className={styles.error_message}>{errors.newPassword}</span>
                     )}
@@ -207,21 +234,32 @@ const ChangePasswordCard = () => {
                     <label htmlFor="confirmPassword" className={styles.form_label}>
                         Confirm New Password
                     </label>
-                    <input
-                        id="confirmPassword"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                            if (errors.confirmPassword) {
-                                setErrors((prev) => ({ ...prev, confirmPassword: "" }));
-                            }
-                        }}
-                        placeholder="••••••••"
-                        className={`${styles.input_field} ${errors.confirmPassword ? styles.input_error : ""}`}
-                        disabled={isSubmitting}
-                        autoComplete="new-password"
-                    />
+                    <div className={styles.password_wrapper}>
+                        <input
+                            id="confirmPassword"
+                            type={showConfirmPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                if (errors.confirmPassword) {
+                                    setErrors((prev) => ({ ...prev, confirmPassword: "" }));
+                                }
+                            }}
+                            placeholder="••••••••"
+                            className={`${styles.input_field} ${errors.confirmPassword ? styles.input_error : ""}`}
+                            disabled={isSubmitting}
+                            autoComplete="new-password"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword((prev) => !prev)}
+                            className={styles.password_toggle_btn}
+                            aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                            tabIndex={-1}
+                        >
+                            {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                        </button>
+                    </div>
                     {errors.confirmPassword && (
                         <span className={styles.error_message}>{errors.confirmPassword}</span>
                     )}

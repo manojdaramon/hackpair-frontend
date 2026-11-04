@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 
 /** Local imports */
 import { useAuth } from "@/context/AuthContext";
+import EyeIcon from "@/icons/common/eye.svg";
+import EyeOffIcon from "@/icons/common/eye-off.svg";
 
 /** Styles */
 import styles from "./signup-card.module.css";
@@ -50,6 +52,8 @@ const SignupCard = () => {
     const [serverError, setServerError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showAdditional, setShowAdditional] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const { signup, user } = useAuth();
     const router = useRouter();
@@ -275,17 +279,28 @@ const SignupCard = () => {
                         <label htmlFor="password" className={styles.form_label}>
                             Password *
                         </label>
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange("password")}
-                            placeholder="••••••••"
-                            className={`${styles.input_field} ${errors.password ? styles.input_error : ""}`}
-                            autoComplete="new-password"
-                            disabled={isSubmitting}
-                        />
+                        <div className={styles.password_wrapper}>
+                            <input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange("password")}
+                                placeholder="••••••••"
+                                className={`${styles.input_field} ${errors.password ? styles.input_error : ""}`}
+                                autoComplete="new-password"
+                                disabled={isSubmitting}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                className={styles.password_toggle_btn}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                            </button>
+                        </div>
                         {errors.password && (
                             <span className={styles.error_message}>{errors.password}</span>
                         )}
@@ -295,17 +310,28 @@ const SignupCard = () => {
                         <label htmlFor="confirmPassword" className={styles.form_label}>
                             Confirm Password *
                         </label>
-                        <input
-                            id="confirmPassword"
-                            type="password"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleInputChange("confirmPassword")}
-                            placeholder="••••••••"
-                            className={`${styles.input_field} ${errors.confirmPassword ? styles.input_error : ""}`}
-                            autoComplete="new-password"
-                            disabled={isSubmitting}
-                        />
+                        <div className={styles.password_wrapper}>
+                            <input
+                                id="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange("confirmPassword")}
+                                placeholder="••••••••"
+                                className={`${styles.input_field} ${errors.confirmPassword ? styles.input_error : ""}`}
+                                autoComplete="new-password"
+                                disabled={isSubmitting}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                className={styles.password_toggle_btn}
+                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                tabIndex={-1}
+                            >
+                                {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                            </button>
+                        </div>
                         {errors.confirmPassword && (
                             <span className={styles.error_message}>{errors.confirmPassword}</span>
                         )}

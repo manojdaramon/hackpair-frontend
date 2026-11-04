@@ -43,6 +43,11 @@ export const metadata = {
         type: "website",
         locale: SeoData.locale,
     },
+    icons: {
+        icon: "/icons/common/logo.svg",
+        shortcut: "/icons/common/logo.svg",
+        apple: "/icons/common/logo.svg",
+    },
 };
 
 /**
